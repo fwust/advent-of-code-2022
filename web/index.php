@@ -17,13 +17,11 @@ require_once('autoload.php');
 
 // Perform puzzles.
 new PuzzleBase(FALSE);
-for($i = 6; $i > 0; $i--) {
-  $day = $i < 10 ? '0' . $i : $i;
+for($i = 24; $i > 0; $i--) {
+  $day = sprintf("%02d", $i);
   $class_name = 'Puzzle\PuzzleDay' . $day;
-  switch ($i) {
-    default :
-      new $class_name();
-      break;
+  if (class_exists($class_name)) {
+    new $class_name();
   }
 }
 
