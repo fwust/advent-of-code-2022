@@ -122,7 +122,7 @@ class PuzzleDay05 extends PuzzleBase {
     $return_str = "";
     foreach ($stakes as $stake) {
       $stake = array_values(array_reverse($stake));
-      if (isset($stake[0])) {
+      if (!empty($stake)) {
         $return_str .= $stake[0];
       }
     }
