@@ -2,6 +2,14 @@
 
 namespace Puzzle;
 use Entity\PuzzleBase;
+use function array_map;
+use function array_pop;
+use function array_reverse;
+use function array_splice;
+use function array_merge;
+use function array_filter;
+use function array_values;
+use function preg_match_all;
 
 class PuzzleDay05 extends PuzzleBase {
 
@@ -83,6 +91,7 @@ class PuzzleDay05 extends PuzzleBase {
    */
   private function applyMoves(array $stakes, bool $rearrangement = false): array {
     foreach ($this->input as $item) {
+      // Extract values from the move input
       preg_match_all('!\d+!', $item, $moves);
 
       $n_moves = $moves[0][0];
