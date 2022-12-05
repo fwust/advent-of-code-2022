@@ -26,7 +26,7 @@ class PuzzleDay02 extends PuzzleBase {
   public function processPart1() {
     $this->render($this->helper->printPart('one'));
     $score = $this->getTotalScore();
-    $this->render("What would your total score be? <br> <strong>$score</strong>");
+    $this->render("The total score is <br> <strong>$score</strong>");
 
     // Process the second part of the puzzle.
     $this->processPart2();
@@ -38,7 +38,7 @@ class PuzzleDay02 extends PuzzleBase {
   public function processPart2() {
     $this->render($this->helper->printPart('two'));
     $score = $this->getTotalScore(true);
-    $this->render("What would your total score be? <br> <strong>$score</strong>");
+    $this->render("The total score is <br> <strong>$score</strong>");
   }
 
   private function getTotalScore($alternative_shape = false): int {

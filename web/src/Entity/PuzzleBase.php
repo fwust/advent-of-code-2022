@@ -63,7 +63,7 @@ class PuzzleBase implements PuzzleInterface {
    * @inheritDoc
    */
   public function processPart1() {
-    $this->render('<h1>=== Advent of Code 2022 ===</h1>');
+    $this->render('<h1>Advent of Code 2022</h1>');
 
     // Process the second part of the puzzle.
     $this->processPart2();
@@ -80,7 +80,7 @@ class PuzzleBase implements PuzzleInterface {
    * @inheritDoc
    */
   public function render(string $message) {
-    print $message;
+    print "<div>".$message."</div>";
   }
 
 }

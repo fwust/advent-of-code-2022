@@ -33,7 +33,7 @@ class PuzzleDay05 extends PuzzleBase {
     $reordered_stakes = $this->applyMoves($this->stakes);
     $result = $this->getTopCrates($reordered_stakes);
 
-    $this->render("What crate ends up on top of each stack?? <br> <strong>$result</strong>");
+    $this->render("The crates on top of each stack are <br> <strong>$result</strong>");
 
     // Process the second part of the puzzle.
     $this->processPart2();
@@ -48,7 +48,7 @@ class PuzzleDay05 extends PuzzleBase {
     $reordered_stakes = $this->applyMoves($this->stakes, true);
     $result = $this->getTopCrates($reordered_stakes);
 
-    $this->render("What crate ends up on top of each stack?? <br> <strong>$result</strong>");
+    $this->render("The crates on top of each stack are <br> <strong>$result</strong>");
   }
 
   /**

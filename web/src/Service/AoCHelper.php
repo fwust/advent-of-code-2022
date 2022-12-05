@@ -32,7 +32,7 @@ class AoCHelper {
    * @return string
    */
   public function printDay($day) {
-    return '<h2>--- DAY ' . $day . ' ---</h2>';
+    return '<h2>DAY ' . $day . '</h2>';
   }
 
   /**
