@@ -3,6 +3,12 @@
 namespace Puzzle;
 
 use Entity\PuzzleBase;
+use function array_key_exists;
+use function array_reverse;
+use function array_slice;
+use function array_sum;
+use function asort;
+use function max;
 
 class PuzzleDay01 extends PuzzleBase {
 
@@ -19,28 +25,28 @@ class PuzzleDay01 extends PuzzleBase {
   /**
    * @inheritDoc
    */
-  public function processPart1() {
+  final public function processPart1(): void {
     $this->render($this->helper->printPart('one'));
 
-    $elve_n = 1;
+    $elf_n = 1;
     foreach ($this->input as $input_val) {
-      // New elve, setting calories to 0 to begin
-      if (!array_key_exists($elve_n, $this->elves_calories)) {
-        $this->elves_calories[$elve_n] = 0;
+      // New elf, setting calories to 0 to begin
+      if (!array_key_exists($elf_n, $this->elves_calories)) {
+        $this->elves_calories[$elf_n] = 0;
       }
 
       if ($input_val === '') {
-        // New elve
-        $elve_n++;
+        // New elf
+        $elf_n++;
       } else {
-        $this->elves_calories[$elve_n] += $input_val;
+        $this->elves_calories[$elf_n] += $input_val;
       }
 
     }
 
-    $max_elve_calories = max($this->elves_calories);
+    $max_elf_calories = max($this->elves_calories);
 
-    $this->render("How many total Calories is that Elf carrying? <br> <strong>$max_elve_calories</strong>");
+    $this->render("The total calories is <br> <strong>$max_elf_calories</strong>");
 
     // Process the second part of the puzzle.
     $this->processPart2();
@@ -49,12 +55,12 @@ class PuzzleDay01 extends PuzzleBase {
   /**
    * @inheritDoc
    */
-  public function processPart2() {
+  final public function processPart2(): void {
     $this->render($this->helper->printPart('two'));
 
     asort($this->elves_calories);
     $result = array_sum(array_slice(array_reverse($this->elves_calories), 0, 3));
-    $this->render("Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total? <br> <strong>$result</strong>");
+    $this->render("The top three total calories is <br> <strong>$result</strong>");
   }
 
 }
