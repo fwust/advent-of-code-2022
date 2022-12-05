@@ -3,6 +3,8 @@
 namespace Puzzle;
 
 use Entity\PuzzleBase;
+use function array_search;
+use function explode;
 
 class PuzzleDay02 extends PuzzleBase {
 
@@ -23,7 +25,7 @@ class PuzzleDay02 extends PuzzleBase {
   /**
    * @inheritDoc
    */
-  public function processPart1() {
+  final public function processPart1(): void {
     $this->render($this->helper->printPart('one'));
     $score = $this->getTotalScore();
     $this->render("The total score is <br> <strong>$score</strong>");
@@ -35,13 +37,13 @@ class PuzzleDay02 extends PuzzleBase {
   /**
    * @inheritDoc
    */
-  public function processPart2() {
+  final public function processPart2(): void {
     $this->render($this->helper->printPart('two'));
     $score = $this->getTotalScore(true);
     $this->render("The total score is <br> <strong>$score</strong>");
   }
 
-  private function getTotalScore($alternative_shape = false): int {
+  private function getTotalScore(bool $alternative_shape = false): int {
     $score = 0;
     foreach ($this->input as $round) {
       $villain_shape = $this->getVillainShape($round);
@@ -64,11 +66,11 @@ class PuzzleDay02 extends PuzzleBase {
     return $score;
   }
 
-  private function getVillainShape($round): int {
+  private function getVillainShape(string $round): int {
     return array_search(explode(' ', $round)[0], $this->villain_shapes, true);
   }
 
-  private function getHeroShape($round, $alternative_shape = false): int {
+  private function getHeroShape(string $round, bool $alternative_shape = false): int {
     $hero_shape = array_search(explode(' ', $round)[1], $this->hero_shapes, true);
     if ($alternative_shape) {
       $villain_shape = $this->getVillainShape($round);

@@ -120,5 +120,4 @@ class PuzzleDay03 extends PuzzleBase {
   private function getChunkedStrings(): array {
     return array_map(static fn($value): array => array_map(static fn($v): array => str_split($v), $value), array_chunk($this->input, 3));
   }
-
 }

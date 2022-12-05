@@ -85,5 +85,4 @@ class PuzzleDay04 extends PuzzleBase {
     }
     return $pairs;
   }
-
 }

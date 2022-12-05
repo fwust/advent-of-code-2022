@@ -128,5 +128,4 @@ class PuzzleDay05 extends PuzzleBase {
     }
     return $return_str;
   }
-
 }

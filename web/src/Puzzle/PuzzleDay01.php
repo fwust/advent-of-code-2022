@@ -62,5 +62,4 @@ class PuzzleDay01 extends PuzzleBase {
     $result = array_sum(array_slice(array_reverse($this->elves_calories), 0, 3));
     $this->render("The top three total calories is <br> <strong>$result</strong>");
   }
-
 }
