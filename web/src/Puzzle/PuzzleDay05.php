@@ -86,10 +86,10 @@ class PuzzleDay05 extends PuzzleBase {
 
   /**
    * @param array $stakes
-   * @param bool $rearrangement
+   * @param bool $reverse_crates
    * @return array
    */
-  private function applyMoves(array $stakes, bool $rearrangement = false): array {
+  private function applyMoves(array $stakes, bool $reverse_crates = false): array {
     foreach ($this->input as $item) {
       // Extract values from the move input
       preg_match_all('!\d+!', $item, $moves);
@@ -101,7 +101,7 @@ class PuzzleDay05 extends PuzzleBase {
       $from = array_reverse($stakes[$from_key]);
       $crates_to_move = array_splice($from, 0, $n_moves);
 
-      if ($rearrangement) {
+      if ($reverse_crates) {
         $crates_to_move = array_reverse($crates_to_move);
       }
 
