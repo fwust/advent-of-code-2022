@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Puzzle;
+
 use Entity\PuzzleBase;
 use function array_slice;
 use function array_unique;
@@ -29,6 +32,7 @@ class PuzzleDay06 extends PuzzleBase {
 
     $result = $this->getFirstMarkerPos(4);
     $this->render("First marker after character <br> <strong>$result</strong>");
+
     // Process the second part of the puzzle.
     $this->processPart2();
   }
@@ -38,6 +42,7 @@ class PuzzleDay06 extends PuzzleBase {
    */
   final public function processPart2(): void {
     $this->render($this->helper->printPart('two'));
+
     $result = $this->getFirstMarkerPos(14);
     $this->render("First marker after character <br> <strong>$result</strong>");
   }
@@ -51,15 +56,15 @@ class PuzzleDay06 extends PuzzleBase {
   }
 
   /**
-   * @param int $length
-   * @return false|int|string
+   * @param int $markerSize
+   * @return int
    */
-  private function getFirstMarkerPos(int $length): int {
-    $result = false;
+  private function getFirstMarkerPos(int $markerSize): int {
+    $result = 0;
     foreach ($this->input_string as $k => $letter) {
-      $chunk = array_slice($this->input_string, $k, $length);
+      $chunk = array_slice($this->input_string, $k, $markerSize);
       if (!$this->hasDuplicates($chunk)) {
-        $result = $k + $length;
+        $result = $k + $markerSize;
         break;
       }
     }
