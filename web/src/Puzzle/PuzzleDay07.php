@@ -15,10 +15,10 @@ use function uasort;
 
 class PuzzleDay07 extends PuzzleBase {
 
-  private int $current_dir = 0; // The value that corresponds to the current key in $directories_tree
+  private int $current_folder = 0; // The value that corresponds to the current key in $folder_tree
   private int $current_depth = 1;
-  private array $files_tree = [];
-  private array $directories_tree = [
+  private array $file_tree = [];
+  private array $folder_tree = [
     [
       'parent' => 0,
       'name' => '/',
@@ -55,7 +55,7 @@ class PuzzleDay07 extends PuzzleBase {
    */
   final public function processPart2(): void {
     $this->render($this->helper->printPart('two'));
-    $size_to_release = 30000000 - (70000000 - $this->directories_tree[0]['size']);
+    $size_to_release = 30000000 - (70000000 - $this->folder_tree[0]['size']);
 
     $result = $this->getSizes($size_to_release, FALSE);
     $this->render("The total size of the smallest directory that, if deleted, would free up enough space is <br> <strong>$result</strong>");
@@ -72,7 +72,7 @@ class PuzzleDay07 extends PuzzleBase {
         $this->processTreeDiscovery($k);
       }
       if (str_starts_with($cli_input, '$ cd')) {
-        $this->processDirectoryChange($cli_input);
+        $this->processFolderChange($cli_input);
       }
     }
     return $this;
@@ -99,16 +99,16 @@ class PuzzleDay07 extends PuzzleBase {
     $listing_output = array_slice($this->input, $current_cursor + 1, $slice_length - $current_cursor);
     foreach ($listing_output as $listing_element) {
       if (str_starts_with($listing_element, 'dir ')) {
-        $this->directories_tree[] = [
-          'parent' => $this->current_dir,
+        $this->folder_tree[] = [
+          'parent' => $this->current_folder,
           'name' => explode('dir ', $listing_element)[1],
           'size' => 0,
           'depth' => $this->current_depth,
         ];
       }
       else {
-        $this->files_tree[] = [
-          'parent' => $this->current_dir,
+        $this->file_tree[] = [
+          'parent' => $this->current_folder,
           'name' => explode(' ', $listing_element)[1],
           'size' => explode(' ', $listing_element)[0],
           'depth' => $this->current_depth,
@@ -118,20 +118,20 @@ class PuzzleDay07 extends PuzzleBase {
   }
 
   /**
-   * Process the "$ cd" in order to update the current_dir and the current_depth.
+   * Process the "$ cd" in order to update the current_folder and the current_depth.
    * @param string $cli_input
    * @return void
    */
-  private function processDirectoryChange(string $cli_input): void {
+  private function processFolderChange(string $cli_input): void {
     $dir = explode('$ cd ', $cli_input)[1];
     if ($dir === '..') {
       $this->current_depth--;
-      $this->current_dir = $this->directories_tree[$this->current_dir]['parent'];
+      $this->current_folder = $this->folder_tree[$this->current_folder]['parent'];
     } else {
       $this->current_depth++;
-      foreach ($this->directories_tree as $k => $d) {
-        if ($d['name'] === $dir && $d['parent'] === $this->current_dir) {
-          $this->current_dir = $k;
+      foreach ($this->folder_tree as $k => $folder) {
+        if ($folder['name'] === $dir && $folder['parent'] === $this->current_folder) {
+          $this->current_folder = $k;
         }
       }
     }
@@ -142,18 +142,18 @@ class PuzzleDay07 extends PuzzleBase {
    * @return void
    */
   private function applySizes(): void {
-    uasort($this->directories_tree, static fn($a, $b) => $b['depth'] <=> $a['depth']);
-    foreach ($this->directories_tree as $d => $dir) {
-      foreach ($this->files_tree as $file) {
-        if ($file['parent'] === $d) {
-          $this->directories_tree[$d]['size'] += $file['size'];
+    uasort($this->folder_tree, static fn($a, $b) => $b['depth'] <=> $a['depth']);
+    foreach ($this->folder_tree as $k => $folder) {
+      foreach ($this->file_tree as $file) {
+        if ($file['parent'] === $k) {
+          $this->folder_tree[$k]['size'] += $file['size'];
         }
       }
-      if ($dir['depth'] > 0) {
-        $this->directories_tree[$dir['parent']]['size'] += $this->directories_tree[$d]['size'];
+      if ($folder['depth'] > 0) {
+        $this->folder_tree[$folder['parent']]['size'] += $this->folder_tree[$k]['size'];
       }
     }
-    ksort($this->directories_tree);
+    ksort($this->folder_tree);
   }
 
   /**
@@ -164,12 +164,12 @@ class PuzzleDay07 extends PuzzleBase {
    */
   private function getSizes(int $max_size, bool $limit = TRUE): int {
     $sizes = [];
-    foreach ($this->directories_tree as $directory) {
-      if ($limit && $directory['size'] < $max_size) {
-        $sizes[] = $directory['size'];
+    foreach ($this->folder_tree as $folder) {
+      if ($limit && $folder['size'] < $max_size) {
+        $sizes[] = $folder['size'];
       }
-      if (!$limit && $directory['size'] >= $max_size){
-        $sizes[] = $directory['size'];
+      if (!$limit && $folder['size'] >= $max_size){
+        $sizes[] = $folder['size'];
       }
     }
     if ($limit) {
