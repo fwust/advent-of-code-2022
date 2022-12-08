@@ -63,6 +63,7 @@ class PuzzleDay08 extends PuzzleBase {
       foreach($line_trees as $y => $tree) {
         $this->tree_height_matrix[$x][$y] = $tree;
         if ($x === 0 || $y === 0 || $x === $tree_row_length || $y === $this->map_size) {
+          // Trees that are on edge of the map are all visible
           $this->tree_visibility_matrix[$x][$y] = 1;
         } else {
           $this->tree_visibility_matrix[$x][$y] = 0;
