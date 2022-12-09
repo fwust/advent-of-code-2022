@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+helpFunction()
+{
+   echo "Usage: ddev init-puzzle [DAY_NUMBER]"
+   exit
+}
+
+day=$1
+dayFile=$day
+if (( dayFile < 10 )); then
+    dayFile="0$dayFile"
+fi
+
+if [ -z "$day" ]
+then
+   echo "The day number is missing";
+   helpFunction
+fi
+
+if ! [[ "$day" =~ ^[0-9]+$ ]]
+    then
+      echo "The day must be an integer"
+      helpFunction
+fi
+
+puzzleFile="web/src/Puzzle/PuzzleDay$dayFile.php"
+if test -f "$puzzleFile"; then
+    echo "$puzzleFile exists."
+    exit
+fi
+
+inputFile="data/input$day"
+if test -f "$inputFile"; then
+    echo "$inputFile exists."
+    exit
+fi
+
+touch $inputFile
+cp web/PuzzleTemplate $puzzleFile
+sed -i "s/{DAY}/$day/g" $puzzleFile
+sed -i "s/{DAY_FILE}/$dayFile/g" $puzzleFile
