@@ -149,5 +149,4 @@ class PuzzleDay09 extends PuzzleBase {
     $this->tail_visited = array_unique($this->tail_visited, SORT_REGULAR);
     return count($this->tail_visited);
   }
-
 }
