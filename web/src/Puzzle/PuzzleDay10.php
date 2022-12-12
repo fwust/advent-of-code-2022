@@ -73,7 +73,7 @@ class PuzzleDay10 extends PuzzleBase {
     foreach ($crt as $row) {
       $output .= implode('', $row) . '<br>';
     }
-    $this->render("The sum of the signal strengths is : ");
+    $this->render("The eight capital letters that appears on the CRT is");
     print("<div><pre>". $output ."</pre></div>");
   }
 }
